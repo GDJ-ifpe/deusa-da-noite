@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ccn6sf7j1bx3h"]
+
+[node name="Main" type="Node" unique_id=329392813]
+
+[node name="Label" type="Label" parent="." unique_id=1946929877]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Eclipse
+O Segredo da Deusa da Noite"
