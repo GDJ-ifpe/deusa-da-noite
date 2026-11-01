@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://db8m1cp164vli"]
+
+[ext_resource type="PackedScene" uid="uid://c24ikiu3sxnix" path="res://player-test/player.tscn" id="1_4j8f0"]
+[ext_resource type="Script" uid="uid://drhkw37pg0450" path="res://ui/dialogue/dialogue_trigger.gd" id="2_ok7t0"]
+[ext_resource type="PackedScene" uid="uid://y55cofwiqsgl" path="res://ui/dialogue/dialogue_box.tscn" id="3_sqyti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkv2p"]
+size = Vector2(1117, 95)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ij6"]
+size = Vector2(200, 40)
+
+[node name="Tests" type="Node2D" unique_id=581695521]
+
+[node name="DialogueBox" parent="." unique_id=298912819 instance=ExtResource("3_sqyti")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=865379465]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=227056895]
+position = Vector2(585, 695)
+shape = SubResource("RectangleShape2D_vkv2p")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D" unique_id=262081538]
+offset_left = -556.0
+offset_top = -44.0
+offset_right = 566.0
+offset_bottom = 47.0
+
+[node name="Player" parent="." unique_id=1935577896 instance=ExtResource("1_4j8f0")]
+position = Vector2(396, 562)
+
+[node name="TriggerDialogo" type="Area2D" parent="." unique_id=1303833378]
+position = Vector2(790, 600)
+script = ExtResource("2_ok7t0")
+dialogue_id = "teste_dialogo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerDialogo" unique_id=1907589159]
+shape = SubResource("RectangleShape2D_j1ij6")
