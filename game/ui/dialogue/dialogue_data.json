@@ -1,0 +1,62 @@
+{
+  "dialogues": [
+	{
+	  "id": "teste_dialogo",
+	  "pause_game": true,
+	  "lines": [
+		{
+		  "character": "Cientista",
+		  "portrait": "neutral",
+		  "text": "Olá, este é um teste do sistema de diálogos."
+		},
+		{
+		  "character": "Filha",
+		  "portrait": "happy",
+		  "text": "Uau! Caixas de fala funcionando!"
+		},
+		{
+		  "character": "Cientista",
+		  "portrait": "neutral",
+		  "text": "Este é o terceiro diálogo de teste com dois personagens."
+		}
+	  ]
+	},
+	{
+	  "id": "comentario_filha",
+	  "pause_game": false,
+	  "lines": [
+		{
+		  "character": "Filha",
+		  "portrait": "neutral",
+		  "text": "Estou explorando o local enquanto você anda."
+		}
+	  ]
+	}
+  ],
+  "characters": {
+	"Cientista": {
+	  "portraits": {
+		"neutral": "res://ui/dialogue/portraits/cientista_neutral.png",
+		"happy": "res://ui/dialogue/portraits/cientista_happy.png"
+	  }
+	},
+	"Filha": {
+	  "portraits": {
+		"neutral": "res://ui/dialogue/portraits/filha_neutral.png",
+		"happy": "res://ui/dialogue/portraits/filha_happy.png"
+	  }
+	},
+	"Orion": {
+	  "portraits": {
+		"neutral": "res://ui/dialogue/portraits/orion_neutral.png",
+		"happy": "res://ui/dialogue/portraits/orion_happy.png"
+	  }
+	},
+	"Umbra": {
+	  "portraits": {
+		"neutral": "res://ui/dialogue/portraits/umbra_neutral.png",
+		"happy": "res://ui/dialogue/portraits/umbra_happy.png"
+	  }
+	}
+  }
+}

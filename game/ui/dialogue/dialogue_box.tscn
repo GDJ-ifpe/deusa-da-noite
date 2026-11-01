@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://y55cofwiqsgl"]
+
+[ext_resource type="Script" uid="uid://1rtb7fxk7gxc" path="res://ui/dialogue/dialogue_box.gd" id="1"]
+
+[node name="DialogueBox" type="CanvasLayer" unique_id=298912819]
+layer = 100
+script = ExtResource("1")
+
+[node name="Panel" type="Control" parent="." unique_id=787101968]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -140.0
+offset_right = -40.0
+offset_bottom = -40.0
+
+[node name="Background" type="ColorRect" parent="Panel" unique_id=1775502779]
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 1.0
+color = Color(0.15, 0.15, 0.2, 0.9)
+
+[node name="Portrait" type="ColorRect" parent="Panel" unique_id=738702714]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 80.0
+color = Color(0.4, 0.8, 1, 1)
+
+[node name="NameLabel" type="Label" parent="Panel" unique_id=1092932990]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 20.0
+offset_right = 396.0
+offset_bottom = 50.0
+text = "Nome"
+
+[node name="TextLabel" type="Label" parent="Panel" unique_id=82351096]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 56.0
+offset_right = 696.0
+offset_bottom = 106.0
+text = "Texto do diálogo..."
+autowrap = true
+autowrap_mode = 1
+
+[node name="SkipHint" type="Label" parent="Panel" unique_id=1807294577]
+modulate = Color(0.7, 0.7, 0.7, 1)
+layout_mode = 0
+offset_left = 96.0
+offset_top = 110.0
+offset_right = 296.0
+offset_bottom = 133.0
+text = "Clique para avançar"
