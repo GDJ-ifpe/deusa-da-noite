@@ -23,13 +23,13 @@ offset_right = 1.0
 offset_bottom = 1.0
 color = Color(0.15, 0.15, 0.2, 0.9)
 
-[node name="Portrait" type="ColorRect" parent="Panel" unique_id=738702714]
+[node name="Portrait" type="TextureRect" parent="Panel" unique_id=738702714]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 80.0
 offset_bottom = 80.0
-color = Color(0.4, 0.8, 1, 1)
+expand_mode = 1
 
 [node name="NameLabel" type="Label" parent="Panel" unique_id=1092932990]
 layout_mode = 0

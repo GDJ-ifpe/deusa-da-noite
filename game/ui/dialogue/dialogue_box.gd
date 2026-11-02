@@ -7,7 +7,7 @@ extends CanvasLayer
 @export var name_font_size := 24
 @export var text_font_size := 20
 @export var box_color: Color = Color(0.15, 0.15, 0.2, 0.9)
-@export var portrait_color: Color = Color(0.4, 0.8, 1.0, 1)
+@export var portrait_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 @export var skip_hint_color: Color = Color(0.7, 0.7, 0.7, 1)
 
 var dialogue_data: Dictionary
@@ -21,7 +21,7 @@ var is_skippable := false
 
 @onready var panel: Control = $Panel
 @onready var background: ColorRect = $Panel/Background
-@onready var portrait: ColorRect = $Panel/Portrait
+@onready var portrait: TextureRect = $Panel/Portrait
 @onready var name_label: Label = $Panel/NameLabel
 @onready var text_label: Label = $Panel/TextLabel
 @onready var skip_hint: Label = $Panel/SkipHint
@@ -34,7 +34,7 @@ func _ready() -> void:
 	
 	# Aplica cores exportadas
 	background.color = box_color
-	portrait.color = portrait_color
+	portrait.modulate = portrait_color
 	skip_hint.modulate = skip_hint_color
 	
 	# Aplica tamanhos de fonte exportados
@@ -102,8 +102,20 @@ func _show_line() -> void:
 	timer = 0.0
 	text_label.text = ""
 	
-	if line.has("portrait"):
-		portrait.visible = true
+	# Carrega o retrato baseado no personagem e expressão
+	if line.has("portrait") and dialogue_data.has("characters"):
+		var character_name = str(line["character"])
+		var expression = str(line["portrait"])
+		if dialogue_data["characters"].has(character_name):
+			var char_data = dialogue_data["characters"][character_name]
+			if char_data.has("portraits") and char_data["portraits"].has(expression):
+				var portrait_path = char_data["portraits"][expression]
+				portrait.texture = load(portrait_path)
+				portrait.visible = true
+			else:
+				portrait.visible = false
+		else:
+			portrait.visible = false
 	else:
 		portrait.visible = false
 	
