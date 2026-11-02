@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bqkvxy0b0h2c1"]
+
+[ext_resource type="Script" uid="uid://bea1g75yogylc" path="res://characters/protagonist/player.gd" id="1_script"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_player"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"interact",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Rect_body"]
+size = Vector2(24, 40)
+
+[sub_resource type="CircleShape2D" id="Circle_interact"]
+radius = 32.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1394555789]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1547464884]
+position = Vector2(0, -20)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_player")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=874166872]
+offset_left = -12.0
+offset_top = -40.0
+offset_right = 12.0
+color = Color(1, 0.5817952, 0.8922304, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1087550168]
+position = Vector2(0, -20)
+shape = SubResource("Rect_body")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=407962126]
+position = Vector2(0, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1486654464]
+shape = SubResource("Circle_interact")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2008272424]
