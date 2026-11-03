@@ -33,10 +33,8 @@ var hp: int
 const ACTION_LEFT     := "ui_left"
 const ACTION_RIGHT    := "ui_right"
 const ACTION_DOWN     := "ui_down"
+# Tecla de ação (pulo + interação context-sensitive com ui_accept):
 const ACTION_JUMP     := "ui_accept"
-# Mesma tecla para interagir (contexto: no chão + perto de interagível).
-# Se quiser tecla separada, troque para "interact" e mapeie no Input Map.
-const ACTION_INTERACT := "interagir"
 
 # ============================================================
 # ESTADOS
@@ -61,6 +59,10 @@ var _jump_buffer_timer: float = 0.0
 var _was_on_floor: bool = false
 var _is_interacting: bool = false
 var _nearby_interactables: Array = []
+var _ignoring_one_way: bool = false
+
+# Grupo usado nas plataformas de mão única (one-way platforms).
+const GROUP_ONE_WAY_PLATFORM := "one_way_platform"
 
 # ============================================================
 # GANCHOS PARA FEATURES FUTURAS (dash / pulo duplo / tempo parado)
@@ -125,6 +127,8 @@ func _physics_process(delta: float) -> void:
 	_handle_action_input()
 	_handle_horizontal_input(delta)
 
+	_handle_one_way_platforms()
+
 	move_and_slide()
 	_clamp_fall_speed()
 	_update_animation_state()
@@ -158,6 +162,31 @@ func _handle_coyote_time() -> void:
 		_coyote_timer = coyote_time
 
 # ============================================================
+# PLATAFORMAS DE MÃO ÚNICA (one-way)
+# Permite pular por baixo e descer pressionando DOWN.
+# As plataformas devem ter grupo "one_way_platform" e
+# CollisionShape2D com one_way_collision habilitado.
+# ============================================================
+func _handle_one_way_platforms() -> void:
+	# Verifica colisões recentes para detectar plataformas de mão única
+	var is_on_one_way := false
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		if collider and collider.is_in_group(GROUP_ONE_WAY_PLATFORM):
+			is_on_one_way = true
+			break
+
+	if is_on_one_way:
+		# No chão de uma plataforma de mão única: permite descer com DOWN
+		if Input.is_action_pressed(ACTION_DOWN) and not _ignoring_one_way:
+			_ignoring_one_way = true
+			# Pequena força para baixo para sair da plataforma
+			velocity.y += 10.0
+		elif not Input.is_action_pressed(ACTION_DOWN):
+			_ignoring_one_way = false
+
+# ============================================================
 # AÇÃO (pulo ou interação - context-sensitive com ui_accept)
 # ============================================================
 func _handle_action_input() -> void:
@@ -168,6 +197,20 @@ func _handle_action_input() -> void:
 	if is_on_floor() and not _nearby_interactables.is_empty():
 		_try_interact()
 		return
+
+	# Contexto: em plataforma de mão única + DOWN + ação -> descer através dela.
+	var is_on_one_way := false
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		if collider and collider.is_in_group(GROUP_ONE_WAY_PLATFORM):
+			is_on_one_way = true
+			break
+	if is_on_one_way:
+		if Input.is_action_pressed(ACTION_DOWN):
+			velocity.y = 400.0  # desce rapidamente através da plataforma
+			_ignoring_one_way = true
+			return
 
 	# Caso contrário, comportamento de pulo com buffer + altura variável.
 	_jump_buffer_timer = jump_buffer_time
